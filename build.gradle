@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.aylaasia'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'net.java.dev.jna:jna:5.11.0'
+    compileOnly 'net.java.dev.jna:jna-platform:5.11.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+jar {
+    archiveVersion = '0.0.1'
+    manifest {
+        attributes(
+                "Manifest-Version": 1.0,
+                'Main-Class': 'com.aylaasia.demo.Demo'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task buildExt {
+    if (file('./ext/target').exists()) {
+        delete('./ext/target')
+    }
+    if (file('./src/main/resources/libext.so').exists()) {
+        delete('./src/main/resources/libext.so')
+    }
+    if (file('./src/main/resources/libext.dylib').exists()) {
+        delete('./src/main/resources/libext.dylib')
+    }
+
+    exec {
+        workingDir "./ext"
+        commandLine 'cargo', 'build', '--release'
+    }
+    copy {
+        from './ext/target/release/libext.dylib'
+        into './src/main/resources'
+    }
+}
+
+build.dependsOn(buildExt)
+
+test {
+    useJUnitPlatform()
+}
