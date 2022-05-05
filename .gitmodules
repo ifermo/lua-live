@@ -1,0 +1,3 @@
+[submodule "ext"]
+	path = ext
+	url = git@github.com:ifermo/lua-live-ext.git
