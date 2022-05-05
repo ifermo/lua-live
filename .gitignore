@@ -54,10 +54,8 @@ out/
 .vscode/
 
 # customize
-HELP.md
+src/main/resources/libext.dylib
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
-!src/main/resources/libext.dylib
+
