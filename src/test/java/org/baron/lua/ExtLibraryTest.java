@@ -20,17 +20,17 @@ public class ExtLibraryTest {
 
 
     @Test
-    void test_char_cnt(){
+    void test_char_cnt() {
         // and_rust: fn(*mut c_char) -> *mut c_char
         int ret = extLib.char_cnt("Rust FFI"); // hello from java and rust
-        assertEquals(8,ret);
+        assertEquals(8, ret);
     }
 
     @Test
-    void  test_concat(){
+    void test_concat() {
         // and_rust: fn(*mut c_char) -> *mut c_char
-        String ret = extLib.concat("Rust ","FFI"); // hello from java and rust
-        assertEquals("Rust FFI",ret);
+        String ret = extLib.concat("Rust ", "FFI"); // hello from java and rust
+        assertEquals("Rust FFI", ret);
 
         // free memory
         extLib.free_str(ret);
